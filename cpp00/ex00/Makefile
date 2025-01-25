@@ -20,7 +20,7 @@ CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 
-%.o: %.cpp
+.cpp.o:
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 all: $(NAME)
