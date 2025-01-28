@@ -1,5 +1,15 @@
 #include <iostream>
 #include <string>
+#include <cctype>
+
+int hasNonPrintableCharacters(const std::string& str) {
+    for (unsigned int i = 0; i < str.length(); i++) {
+        if (!isprint(str[i])) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 int ft_has_only_digits(std::string str)
 {
@@ -13,19 +23,83 @@ int ft_has_only_digits(std::string str)
 
 class Contact
 {
-public:
+private:
 	std::string firstname;
 	std::string lastname;
 	std::string nickname;
 	std::string phone;
 	std::string darkest_secret;
+
+public:
+    std::string get_firstname()
+    {
+        return firstname;
+    }
+    std::string get_lastname()
+    {
+        return lastname;
+    }
+    std::string get_nickname()
+    {
+        return nickname;
+    }
+    std::string get_phone()
+    {
+        return phone;
+    }
+    std::string get_darkest_secret()
+    {
+        return darkest_secret;
+    }
+    void set_firstname(std::string firstname)
+    {
+        this->firstname = firstname;
+    }
+    void set_lastname(std::string lastname)
+    {
+        this->lastname = lastname;
+    }
+    void set_nickname(std::string nickname)
+    {
+        this->nickname = nickname;
+    }
+    void set_phone(std::string phone)
+    {
+        this->phone = phone;
+    }
+    void set_darkest_secret(std::string darkest_secret)
+    {
+        this->darkest_secret = darkest_secret;
+    }
 };
 
 class PhoneBook
 {
-public:
-	int contact_count;
+private:
 	Contact contacts[8];
+	int contact_count;
+	int contact_rotations;
+public:
+
+    int get_contact_count()
+    {
+        return contact_count;
+    }
+
+    int get_contact_rotations()
+    {
+        return contact_rotations;
+    }
+
+    void set_contact_count(int contact_count)
+    {
+        this->contact_count = contact_count;
+    }
+
+    void set_contact_rotations(int contact_rotations)
+    {
+        this->contact_rotations = contact_rotations;
+    }
 
 	void add_contact(Contact contact)
 	{
@@ -33,9 +107,15 @@ public:
 		{
 			contacts[contact_count] = contact;
 			contact_count++;
+			contact_rotations++;
 		}
 		else
-			contacts[0] = contact;
+		{
+			if (contact_rotations == 8)
+				contact_rotations = 0;
+			contacts[contact_rotations] = contact;
+			contact_rotations++;
+		}
 	}
 	
 	int search_contact()
@@ -59,49 +139,49 @@ public:
 			}
 			else
 				line[9] = i + 1 + '0';
-			if (contacts[i].firstname.length() > 10)
+			if (contacts[i].get_firstname().length() > 10)
 			{
 				for (int j = 0; j < 9; j++)
 				{
-					line[j + 11] = contacts[i].firstname[j];
+					line[j + 11] = contacts[i].get_firstname()[j];
 				}
 				line[20] = '.';
 			}
 			else
 			{
-				for (int j = contacts[i].firstname.length() - 1; j >= 0; j--)
-				{
-					line[20 - j] = contacts[i].firstname[j];
-				}
+				for (int j = contacts[i].get_firstname().length() - 1; j >= 0; j--)
+                {
+                    line[20 - contacts[i].get_firstname().length() + j + 1] = contacts[i].get_firstname()[j];
+                }
 			}
-			if (contacts[i].lastname.length() > 10)
+			if (contacts[i].get_lastname().length() > 10)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    line[j + 22] = contacts[i].get_lastname()[j];
+                }
+                line[31] = '.';
+            }
+            else
+            {
+                for (int j = contacts[i].get_lastname().length() - 1; j >= 0; j--)
+                {
+                    line[31 - contacts[i].get_lastname().length() + j + 1] = contacts[i].get_lastname()[j];
+                }
+            }
+			if (contacts[i].get_nickname().length() > 10)
 			{
 				for (int j = 0; j < 9; j++)
 				{
-					line[j + 22] = contacts[i].lastname[j];
-				}
-				line[31] = '.';
-			}
-			else
-			{
-				for (int j = contacts[i].lastname.length() - 1; j >= 0; j--)
-				{
-					line[31 - j] = contacts[i].lastname[j];
-				}
-			}
-			if (contacts[i].nickname.length() > 10)
-			{
-				for (int j = 0; j < 9; j++)
-				{
-					line[33 - j] = contacts[i].nickname[j];
+					line[33 + j] = contacts[i].get_nickname()[j];
 				}
 				line[42] = '.';
 			}
 			else
 			{
-				for (int j = contacts[i].nickname.length() - 1; j >= 0; j--)
+				for (int j = contacts[i].get_nickname().length() - 1; j >= 0; j--)
 				{
-					line[42 - j] = contacts[i].nickname[j];
+					line[42 - contacts[i].get_nickname().length() + j + 1] = contacts[i].get_nickname()[j];
 				}
 			}
 			std::cout << line << std::endl;
@@ -130,24 +210,26 @@ public:
 		}
 		if (index > 0 && index <= contact_count)
 		{
-			std::cout << "First name: " << contacts[index - 1].firstname << std::endl;
-			std::cout << "Last name: " << contacts[index - 1].lastname << std::endl;
-			std::cout << "Nickname: " << contacts[index - 1].nickname << std::endl;
-			std::cout << "Phone number: " << contacts[index - 1].phone << std::endl;
-			std::cout << "Darkest secret: " << contacts[index - 1].darkest_secret << std::endl;
+			std::cout << "First name: " << contacts[index - 1].get_firstname() << std::endl;
+            std::cout << "Last name: " << contacts[index - 1].get_lastname() << std::endl;
+            std::cout << "Nickname: " << contacts[index - 1].get_nickname() << std::endl;
+            std::cout << "Phone number: " << contacts[index - 1].get_phone() << std::endl;
+            std::cout << "Darkest secret: " << contacts[index - 1].get_darkest_secret() << std::endl;
 		}
 		else
 			std::cout << "Invalid index." << std::endl;
 		return 0;
-	}
+    }
 };
 
 int main()
 {
 	PhoneBook phonebook;
 	Contact contact;
+    std::string line;
 
-	phonebook.contact_count = 0;
+    phonebook.set_contact_count(0);
+    phonebook.set_contact_rotations(0);
 
 	while (1)
 	{
@@ -172,60 +254,70 @@ int main()
 		if (command == "ADD")
 		{
 			std::cout << "Enter the first name: ";
-			if (std::getline(std::cin, contact.firstname) && contact.firstname.length() > 0)
-				;
-			else if (std::cin.eof())
-				break;
-			else
-			{
-				std::cout << "Invalid first name." << std::endl;
-				continue;
-			}
-			std::cout << "Enter the last name: ";
-			if (std::getline(std::cin, contact.lastname))
-				;
-			else if (std::cin.eof())
-				break;
-			else
-			{
-				std::cout << "Invalid last name." << std::endl;
-				continue;
-			}
-			std::cout << "Enter the nickname: ";
-			if (std::getline(std::cin, contact.nickname) && contact.nickname.length() > 0)
-				;
-			else if (std::cin.eof())
-				break;
-			else
-			{
-				std::cout << "Invalid nickname." << std::endl;
-				continue;
-			}
-			std::cout << "Enter the phone number: ";
-			if (std::getline(std::cin, contact.phone) && contact.phone.length() > 0 && ft_has_only_digits(contact.phone))
-				;
-			else if (std::cin.eof())
-				break;
-			else
-			{
-				std::cout << "Invalid phone number." << std::endl;
-				continue;
-			}
-			std::cout << "Enter the darkest secret: ";
-			if (std::getline(std::cin, contact.darkest_secret) && contact.darkest_secret.length() > 0)
-				;
-			else if (std::cin.eof())
-				break;
-			else
-			{
-				std::cout << "Invalid darkest secret." << std::endl;
-				continue;
-			}
+			if (std::getline(std::cin, line) && !hasNonPrintableCharacters(line) && line.length() > 0)
+                ;
+            else if (std::cin.eof())
+                break;
+            else
+            {
+                std::cout << "Invalid first name." << std::endl;
+                continue;
+            }
+            contact.set_firstname(line);
+            std::cout << "Enter the last name: ";
+            if (std::getline(std::cin, line) && !hasNonPrintableCharacters(line) && line.length() > 0)
+                ;
+            else if (std::cin.eof())
+                break;
+            else
+            {
+                std::cout << "Invalid last name." << std::endl;
+                continue;
+            }
+            contact.set_lastname(line);
+            std::cout << "Enter the nickname: ";
+            if (std::getline(std::cin, line) && !hasNonPrintableCharacters(line) && line.length() > 0)
+                ;
+            else if (std::cin.eof())
+                break;
+            else
+            {
+                std::cout << "Invalid nickname." << std::endl;
+                continue;
+            }
+            contact.set_nickname(line);
+            std::cout << "Enter the phone number: ";
+            if (std::getline(std::cin, line) && !hasNonPrintableCharacters(line) && line.length() > 0)
+                ;
+            else if (std::cin.eof())
+                break;
+            else
+            {
+                std::cout << "Invalid phone number." << std::endl;
+                continue;
+            }
+            if (!ft_has_only_digits(line))
+            {
+                std::cout << "Invalid phone number." << std::endl;
+                continue;
+            }
+            contact.set_phone(line);
+            std::cout << "Enter the darkest secret: ";
+            if (std::getline(std::cin, line) && !hasNonPrintableCharacters(line) && line.length() > 0)
+                ;
+            else if (std::cin.eof())
+                break;
+            else
+            {
+                std::cout << "Invalid darkest secret." << std::endl;
+                continue;
+            }
+            contact.set_darkest_secret(line);
 			phonebook.add_contact(contact);
 		}
 		else if (command == "SEARCH")
 		{
-			if (phonebook.contact_count == 0)
+			if (phonebook.get_contact_count() == 0)
 			{
 				std::cout << "No contacts." << std::endl;
 				continue;
