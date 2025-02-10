@@ -1,4 +1,3 @@
-
 #ifndef ZOMBIE_HPP
 #define ZOMBIE_HPP
 
@@ -7,18 +6,18 @@
 
 class Zombie {
 private:
-    std::string name;
+    std::string _name;
+
 public:
-    // Construtores
-    Zombie(void);
+    // Constructor / Destructor
     Zombie(std::string name);
+    ~Zombie();
 
-    // Destrutor
-    ~Zombie(void);
-
-    // Função para o anúncio
-    void announce(void) const;
+    // Member function
+    void announce(void);
 };
 
 #endif
 
+Zombie* newZombie(std::string name);
+void    randomChump(std::string name);

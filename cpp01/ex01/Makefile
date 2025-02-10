@@ -1,6 +1,6 @@
-NAME = BraiiiiiiinnnzzzZ
+NAME = Moar\ brainz!
 
-SRC = main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
+SRC = main.cpp Zombie.cpp zombieHorde.cpp
 
 INC = -I Zombie.hpp
 

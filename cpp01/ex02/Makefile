@@ -1,8 +1,6 @@
-NAME = BraiiiiiiinnnzzzZ
+NAME = HI\ THIS\ IS\ BRAIN
 
-SRC = main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
-
-INC = -I Zombie.hpp
+SRC = main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -16,7 +14,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(INC) -o $(NAME) $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
 
 clean:
 	rm -f $(OBJ)
