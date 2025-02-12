@@ -1,5 +1,11 @@
 #include "ClapTrap.hpp"
 
+// Default constructor: initializes the ClapTrap with default values.
+
+ClapTrap::ClapTrap() : _name("ClapTrap"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
+    std::cout << "ClapTrap " << _name << " constructed." << std::endl;
+}
+
 // Constructor: initializes the ClapTrap with the provided name and default values.
 ClapTrap::ClapTrap(const std::string &name)
     : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {

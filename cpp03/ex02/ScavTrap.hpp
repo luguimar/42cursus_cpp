@@ -5,6 +5,8 @@
 
 class ScavTrap : public ClapTrap {
 public:
+    // Default constructor
+    ScavTrap();
     // Constructors and destructor (Orthodox Canonical Form)
     ScavTrap(const std::string &name);
     ScavTrap(const ScavTrap &other);

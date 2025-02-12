@@ -5,6 +5,8 @@
 
 class FragTrap : public ClapTrap {
 public:
+    // Default constructor
+    FragTrap();
     // Constructors and Destructor (Orthodox Canonical Form)
     FragTrap(const std::string &name);
     FragTrap(const FragTrap &other);

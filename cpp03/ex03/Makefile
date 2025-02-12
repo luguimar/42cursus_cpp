@@ -8,7 +8,7 @@ OBJ = $(SRC:.cpp=.o)
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+CXXFLAGS = -Wshadow -Wno-shadow -Wall -Wextra -Werror -std=c++98 -pedantic
 
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -c $< -o $(<:.cpp=.o)

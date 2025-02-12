@@ -1,5 +1,16 @@
 #include "ScavTrap.hpp"
 
+// Default constructor: calls ClapTrap's default constructor and then resets attributes.
+ScavTrap::ScavTrap() : ClapTrap() {
+    // Update base attributes with new values for ScavTrap.
+    // (Make sure these members are declared as protected in ClapTrap.)
+    this->_name = "ScavTrap";
+    this->_hitPoints = 100;
+    this->_energyPoints = 50;
+    this->_attackDamage = 20;
+    std::cout << "ScavTrap " << this->_name << " constructed." << std::endl;
+}
+
 // Constructor: calls ClapTrap's constructor and then resets attributes.
 ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name) {
     // Update base attributes with new values for ScavTrap.

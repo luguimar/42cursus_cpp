@@ -12,6 +12,7 @@ int main( void ) {
     std::cout << a << std::endl;       // check new value
     std::cout << b << std::endl;       // should be 5.05 * 2 = 10.10(ish)
     std::cout << Fixed::max( a, b ) << std::endl; // Compare a and b
+    std::cout << Fixed::min( a, b ) << std::endl; // Compare a and b
 
     return 0;
 }

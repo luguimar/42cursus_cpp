@@ -12,6 +12,8 @@ private:
     int         _attackDamage;
 
 public:
+    // Default constructor
+    ClapTrap();
     // Constructor that takes a name as parameter
     ClapTrap(const std::string &name);
     // Copy constructor

@@ -1,6 +1,16 @@
 #include "FragTrap.hpp"
 #include <iostream>
 
+// Default constructor: Calls the base ClapTrap constructor, then resets attributes.
+FragTrap::FragTrap() : ClapTrap() {
+    // Update attributes specific to FragTrap.
+    this->_name = "ClapTrap";
+    this->_hitPoints = 100;
+    this->_energyPoints = 100;
+    this->_attackDamage = 30;
+    std::cout << "FragTrap " << this->_name << " constructed." << std::endl;
+}
+
 // Constructor: Calls the base ClapTrap constructor, then resets attributes.
 FragTrap::FragTrap(const std::string &name) : ClapTrap(name) {
     // Update attributes specific to FragTrap.
