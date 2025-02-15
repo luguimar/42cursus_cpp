@@ -1,6 +1,8 @@
-NAME = phonebook
+NAME = The\ Job\ Of\ Your\ Dreams
 
-SRC = main.cpp
+SRC = tests.cpp Account.cpp
+
+INC = -I Account.hpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -9,12 +11,12 @@ CXX = c++
 CXXFLAGS = -g -Wall -Wextra -Werror -std=c++98 #-pedantic
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $(<:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
+	$(CXX) $(CXXFLAGS) $(INC) -o $(NAME) $(OBJ)
 
 clean:
 	rm -f $(OBJ)
