@@ -4,15 +4,17 @@
 #include "ICharacter.hpp"
 #include "AMateria.hpp"
 
-class Character : public ICharacter {
+class Character : public ICharacter
+{
 private:
     std::string _name;
     AMateria*   _inventory[4];
 
 public:
-    Character(std::string const &name);
-    Character(const Character &other);
-    Character &operator=(const Character &other);
+    Character();
+    Character(std::string const & name);
+    Character(Character const & src);
+    Character & operator=(Character const & rhs);
     virtual ~Character();
 
     virtual std::string const & getName() const;
@@ -22,3 +24,4 @@ public:
 };
 
 #endif
+

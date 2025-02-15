@@ -3,11 +3,12 @@
 
 #include "AMateria.hpp"
 
-class Ice : public AMateria {
+class Ice : public AMateria
+{
 public:
     Ice();
-    Ice(const Ice &other);
-    Ice &operator=(const Ice &other);
+    Ice(Ice const & src);
+    Ice & operator=(Ice const & rhs);
     virtual ~Ice();
 
     virtual AMateria* clone() const;
@@ -15,3 +16,4 @@ public:
 };
 
 #endif
+

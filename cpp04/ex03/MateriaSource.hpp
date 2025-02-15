@@ -3,14 +3,15 @@
 
 #include "IMateriaSource.hpp"
 
-class MateriaSource : public IMateriaSource {
+class MateriaSource : public IMateriaSource
+{
 private:
     AMateria* _templates[4];
 
 public:
     MateriaSource();
-    MateriaSource(const MateriaSource &other);
-    MateriaSource &operator=(const MateriaSource &other);
+    MateriaSource(MateriaSource const & src);
+    MateriaSource & operator=(MateriaSource const & rhs);
     virtual ~MateriaSource();
 
     virtual void learnMateria(AMateria* m);
@@ -18,3 +19,4 @@ public:
 };
 
 #endif
+

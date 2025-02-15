@@ -5,13 +5,14 @@
 #include <iostream>
 
 class Brain {
-public:
+private:
     std::string ideas[100];
-
+public:
     // Orthodox Canonical Form
     Brain();
     Brain(const Brain &other);
     Brain &operator=(const Brain &other);
+    std::string getIdea(int index) const;
     ~Brain();
 };
 

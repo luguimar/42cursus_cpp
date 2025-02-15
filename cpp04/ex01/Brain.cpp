@@ -21,6 +21,10 @@ Brain &Brain::operator=(const Brain &other) {
     return *this;
 }
 
+std::string Brain::getIdea(int index) const {
+    return ideas[index];
+}
+
 Brain::~Brain() {
     std::cout << "Brain destructor called" << std::endl;
 }

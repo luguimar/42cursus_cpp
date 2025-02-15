@@ -31,6 +31,9 @@ int main() {
     delete original;
     std::cout << "Copy of Dog makes sound (after deleting original): ";
     copyDog->makeSound();
+    for (int i = 0; i < 100; i++) {
+        std::cout << "idea " << i << " :" << copyDog->getBrain()->getIdea(i) << std::endl;
+    }
     delete copyDog;
 
     // Delete all animals (will call the proper destructors)

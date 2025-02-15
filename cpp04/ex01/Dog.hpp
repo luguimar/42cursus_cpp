@@ -15,6 +15,7 @@ public:
     virtual ~Dog();
 
     virtual void makeSound() const;
+    Brain* getBrain() const;
 };
 
 #endif
