@@ -16,6 +16,12 @@ public:
     ~Intern();
 
     AForm* makeForm(const std::string &formName, const std::string &target) const;
+
+private:
+    static AForm* createShrubbery(const std::string &target);
+    static AForm* createRobotomy(const std::string &target);
+    static AForm* createPresidential(const std::string &target);
 };
 
 #endif
+
