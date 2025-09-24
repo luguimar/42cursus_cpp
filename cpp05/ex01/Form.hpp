@@ -1,43 +1,43 @@
 #ifndef FORM_HPP
 #define FORM_HPP
 
-#include <string>
 #include <iostream>
+#include <string>
 #include <exception>
+#include "Bureaucrat.hpp"
 
-class Bureaucrat;						// fwd
-
-class Form
-{
-public:
-	/* Orthodox Canonical Form */
-	Form(const std::string& name, int gradeToSign, int gradeToExec);
-	Form(const Form& rhs);
-	Form& operator=(const Form& rhs);
-	~Form();
-
-	/* Getters */
-	const std::string&	getName()		 const;
-	bool				isSigned()		 const;
-	int					getGradeToSign() const;
-	int					getGradeToExec() const;
-
-	/* Behaviour */
-	void	beSigned(const Bureaucrat& b);
-
-	/* Exceptions */
-	class GradeTooHighException : public std::exception
-	{ public: const char* what() const throw(); };
-	class GradeTooLowException  : public std::exception
-	{ public: const char* what() const throw(); };
-
+class Form {
 private:
-	Form();									// disabled
+    const std::string _name;
+    bool _isSigned;
+    const int _signGrade;
+    const int _execGrade;
 
-	const std::string	_name;
-	bool				_signed;
-	const int			_gradeToSign;
-	const int			_gradeToExec;
+public:
+    // Orthodox Canonical Form
+    Form();
+    Form(const std::string& name, int signGrade, int execGrade);
+    Form(const Form& other);
+    Form& operator=(const Form& other);
+    ~Form();
+
+    const std::string& getName() const;
+    bool getIsSigned() const;
+    int getSignGrade() const;
+    int getExecGrade() const;
+
+    void beSigned(const Bureaucrat& b);
+
+    // Exceptions
+    class GradeTooHighException : public std::exception {
+    public:
+        virtual const char* what() const throw();
+    };
+
+    class GradeTooLowException : public std::exception {
+    public:
+        virtual const char* what() const throw();
+    };
 };
 
 std::ostream& operator<<(std::ostream& os, const Form& f);

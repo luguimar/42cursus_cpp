@@ -1,29 +1,23 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
-int main()
-{
-	try
-	{
-		Bureaucrat alice("Alice", 2);
-		std::cout << alice << std::endl;
+int main() {
+    try {
+        Bureaucrat bob("Bob", 50);
+        Form contract("Contract", 40, 30);
 
-		alice.incrementGrade();			// becomes 1
-		std::cout << alice << std::endl;
+        std::cout << bob << std::endl;
+        std::cout << contract << std::endl;
 
-		alice.incrementGrade();			// boom
-	}
-	catch (std::exception& e)
-	{
-		std::cerr << "Exception: " << e.what() << std::endl;
-	}
+        bob.signForm(contract);
+        std::cout << contract << std::endl;
 
-	try
-	{
-		Bureaucrat bob("Bob", 151);		// constructor throws
-	}
-	catch (std::exception& e)
-	{
-		std::cerr << "Cannot create Bob: " << e.what() << std::endl;
-	}
+        Bureaucrat alice("Alice", 35);
+        alice.signForm(contract);
+        std::cout << contract << std::endl;
+
+    } catch (std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+    return 0;
 }
-

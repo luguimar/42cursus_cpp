@@ -2,7 +2,10 @@
 #define BUREAUCRAT_HPP
 
 #include <iostream>
-#include <stdexcept>
+#include <string>
+#include <exception>
+
+class AForm; // forward declaration
 
 class Bureaucrat {
 private:
@@ -17,13 +20,14 @@ public:
     Bureaucrat& operator=(const Bureaucrat& other);
     ~Bureaucrat();
 
-    // Getters
     const std::string& getName() const;
     int getGrade() const;
 
-    // Methods
-    void incrementGrade(); // higher rank => smaller number
-    void decrementGrade(); // lower rank => bigger number
+    void incrementGrade();
+    void decrementGrade();
+
+    void signForm(AForm& form) const;
+    void executeForm(AForm const & form) const;
 
     // Exceptions
     class GradeTooHighException : public std::exception {
@@ -37,7 +41,7 @@ public:
     };
 };
 
-// Operator overload
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);
 
 #endif
+
