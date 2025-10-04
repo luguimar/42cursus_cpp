@@ -22,6 +22,10 @@ void PmergeMe::processInput(int argc, char** argv) {
         throw std::invalid_argument("Error: No input numbers provided.");
     }
 
+    if (argc - 1 > 3000) {
+        throw std::invalid_argument("Error: Too many input numbers (maximum is 3000).");
+    }
+
     for (int i = 1; i < argc; ++i) {
         std::istringstream iss(argv[i]);
         int num;
@@ -165,6 +169,7 @@ void PmergeMe::mergeInsertSortVec(std::vector<int>& v) {
     }
     if (i < static_cast<int>(v.size())) {
         pairs.push_back(std::make_pair(v[i], -1)); // Handle odd element
+        pendingElements.push_back(v[i]);
     }
     if (mainChain.size() > 1) {
         mergeInsertSortVec(mainChain);
@@ -205,6 +210,7 @@ void PmergeMe::mergeInsertSortDeq(std::deque<int>& d) {
     }
     if (i < static_cast<int>(d.size())) {
         pairs.push_back(std::make_pair(d[i], -1)); // Handle odd element
+        pendingElements.push_back(d[i]);
     }
     if (mainChain.size() > 1) {
         mergeInsertSortDeq(mainChain);
