@@ -24,6 +24,10 @@ class PmergeMe {
         int lastJacobsthal(int size) const;
         int inVectorFindIndiceOf(const std::vector<int>& v, int value);
         std::vector<int> jacobsthalOrder(int size);
+        int binarySearchInsertPosition(const std::vector<int>& a, int value);
+        int binarySearchInsertPosition(const std::deque<int>& a, int value);
+        int findElementPair(const std::vector<std::pair<int,int> >& pairs, int element);
+        int findElementPair(const std::deque<std::pair<int,int> >& pairs, int element);
 };
 
 #endif

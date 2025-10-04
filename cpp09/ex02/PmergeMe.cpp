@@ -109,12 +109,122 @@ std::vector<int> PmergeMe::jacobsthalOrder(int size) {
     return order;
 }
 
+int PmergeMe::binarySearchInsertPosition(const std::vector<int>& a, int value) {
+    std::size_t lo = 0, hi = a.size();
+    while (lo < hi) {
+        std::size_t mid = lo + (hi - lo) / 2;
+        if (a[mid] < value) lo = mid + 1;
+        else                hi = mid;
+    }
+    return static_cast<int>(lo);
+}
+
+int PmergeMe::binarySearchInsertPosition(const std::deque<int>& a, int value) {
+    std::size_t lo = 0, hi = a.size();
+    while (lo < hi) {
+        std::size_t mid = lo + (hi - lo) / 2;
+        if (a[mid] < value) lo = mid + 1;
+        else                hi = mid;
+    }
+    return static_cast<int>(lo);
+}
+
+int PmergeMe::findElementPair(const std::vector<std::pair<int,int> >& pairs, int element) {
+    for (size_t i = 0; i < pairs.size(); ++i) {
+        if (pairs[i].first == element) {
+            return pairs[i].second;
+        }
+    }
+    return -1; // Not found
+}
+
+int PmergeMe::findElementPair(const std::deque<std::pair<int,int> >& pairs, int element) {
+    for (size_t i = 0; i < pairs.size(); ++i) {
+        if (pairs[i].first == element) {
+            return pairs[i].second;
+        }
+    }
+    return -1; // Not found
+}
+
 void PmergeMe::mergeInsertSortVec(std::vector<int>& v) {
-    (void)v;
+    std::vector<std::pair<int,int> > pairs;
+    std::vector<int> mainChain;
+    std::vector<int> pendingElements;
+    int i = 0;
+    for(; i + 1 < static_cast<int>(v.size()); i += 2) {
+        if (v[i] < v[i + 1]) {
+            pairs.push_back(std::make_pair(v[i], v[i + 1]));
+            mainChain.push_back(v[i + 1]);
+            pendingElements.push_back(v[i]);
+        } else {
+            pairs.push_back(std::make_pair(v[i + 1], v[i]));
+            mainChain.push_back(v[i]);
+            pendingElements.push_back(v[i + 1]);
+        }
+    }
+    if (i < static_cast<int>(v.size())) {
+        pairs.push_back(std::make_pair(v[i], -1)); // Handle odd element
+    }
+    if (mainChain.size() > 1) {
+        mergeInsertSortVec(mainChain);
+    }
+    std::vector<int> order = jacobsthalOrder(pendingElements.size());
+    for (size_t j = 0; j < order.size(); ++j) {
+        int element = pendingElements[order[j] - 1];
+        int elementPair = findElementPair(pairs, element);
+        if (elementPair != -1) {
+            int pos = binarySearchInsertPosition(mainChain, elementPair);
+            while (pos > 0 && element < mainChain[pos - 1]) {
+                pos--;
+            }
+            mainChain.insert(mainChain.begin() + pos, element);
+        } else {
+            int pos = binarySearchInsertPosition(mainChain, element);
+            mainChain.insert(mainChain.begin() + pos, element);
+        }
+    }
+    v = mainChain; // Copy sorted mainChain back to v
 }
 
 void PmergeMe::mergeInsertSortDeq(std::deque<int>& d) {
-    (void)d;
+    std::deque<std::pair<int,int> > pairs;
+    std::deque<int> mainChain;
+    std::deque<int> pendingElements;
+    int i = 0;
+    for(; i + 1 < static_cast<int>(d.size()); i += 2) {
+        if (d[i] < d[i + 1]) {
+            pairs.push_back(std::make_pair(d[i], d[i + 1]));
+            mainChain.push_back(d[i + 1]);
+            pendingElements.push_back(d[i]);
+        } else {
+            pairs.push_back(std::make_pair(d[i + 1], d[i]));
+            mainChain.push_back(d[i]);
+            pendingElements.push_back(d[i + 1]);
+        }
+    }
+    if (i < static_cast<int>(d.size())) {
+        pairs.push_back(std::make_pair(d[i], -1)); // Handle odd element
+    }
+    if (mainChain.size() > 1) {
+        mergeInsertSortDeq(mainChain);
+    }
+    std::vector<int> order = jacobsthalOrder(pendingElements.size());
+    for (size_t j = 0; j < order.size(); ++j) {
+        int element = pendingElements[order[j] - 1];
+        int elementPair = findElementPair(pairs, element);
+        if (elementPair != -1) {
+            int pos = binarySearchInsertPosition(mainChain, elementPair);
+            while (pos > 0 && element < mainChain[pos - 1]) {
+                pos--;
+            }
+            mainChain.insert(mainChain.begin() + pos, element);
+        } else {
+            int pos = binarySearchInsertPosition(mainChain, element);
+            mainChain.insert(mainChain.begin() + pos, element);
+        }
+    }
+    d = mainChain; // Copy sorted mainChain back to d
 }
 
 void PmergeMe::printContainer(const std::vector<int>& v) const {
