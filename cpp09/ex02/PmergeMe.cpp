@@ -53,48 +53,83 @@ void PmergeMe::processInput(int argc, char** argv) {
     std::cout << "Time to process a range of " << deq.size() << " elements with std::deque  : " << timeDeq << " us" << std::endl;
 }
 
-int PmergeMe::postJacobsthalIndex(int n, int size) const {
-    int j = 0;
-    while (true) {
-        int jVal = jacobsthal(j);
-        if (jVal >= size) {
-            return j - 1;
-        }
-        j++;
+int PmergeMe::jacobsthal(int n) const {
+    if (n <= 0) return 0;
+    if (n == 1) return 1;
+    int a = 0, b = 1;
+    for (int k = 2; k <= n; ++k) {
+        int c = b + 2 * a;
+        a = b;
+        b = c;
     }
+    return b;
 }
 
-int PmergeMe::jacobsthal(int n) const {
-    if (n == 0) return 1;
-    if (n == 1) return 1;
-    return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
+int PmergeMe::lastJacobsthal(int size) const {
+    int i = 0;
+    while (jacobsthal(i) <= size) {
+        i++;
+    }
+    return jacobsthal(i - 1);
+}
+
+int PmergeMe::inVectorFindIndiceOf(const std::vector<int>& v, int value) {
+    for (size_t i = 0; i < v.size(); ++i) {
+        if (v[i] == value) {
+            return i;
+        }
+    }
+    return -1; // Not found
+}
+
+std::vector<int> PmergeMe::jacobsthalOrder(int size) {
+    std::vector<int> order;
+    int last = lastJacobsthal(size);
+//    int origLast = last;
+//    int prev = lastJacobsthal(last - 1);
+    order.push_back(last);  std::cout << "Last Jacobsthal <= " << size << " is " << last << std::endl;
+    while (last < size) {
+        order.push_back(size--);
+    }
+    int prevLast = last;
+    if (last == 1) return order;
+    last = lastJacobsthal(last - 1);
+    order.insert(order.begin(), last);
+    int i = 0;
+    while (last < size) {
+        order.insert(order.begin() + PmergeMe::inVectorFindIndiceOf(order, prevLast), size--);
+        std::cout << "Inserting " << size + 1 << " before " << prevLast << " iteration: " << i << std::endl;
+        std::cout << "Current order: ";
+        PmergeMe::printContainer(order);
+        std::cout << std::endl;
+        i++;
+        if (last == size) {
+            prevLast = last;
+            last = lastJacobsthal(last - 1);
+            if (last == 1) break;
+        }
+    }
+    return order;
 }
 
 void PmergeMe::mergeInsertSortVec(std::vector<int>& v) {
-    int compCount = 0;
-    if (v.size() <= 1) return;
-
-    int i = 1;
-    std::vector<std::pair<int, int> > pairs;
-    while (i < static_cast<int>(v.size())) {
-        if (v[i - 1] > v[i]) {
-            pairs.push_back(std::make_pair(v[i], v[i - 1]));
-        } else {
-            pairs.push_back(std::make_pair(v[i - 1], v[i]));
-        }
-        compCount++;
-        i += 2;
-    }
-    if (i == static_cast<int>(v.size())) {
-        pairs.push_back(std::make_pair(v[i - 1], -1)); // Odd element out
-    }
-    std::vector<int> mainChain;
-    for (size_t j = 0; j < pairs.size(); ++j) {
-        mainChain.push_back(pairs[j].first);
-    }
-    mergeInsertSortVec(mainChain);
- 
-    
+    (void)v;
 }
 
+void PmergeMe::mergeInsertSortDeq(std::deque<int>& d) {
+    (void)d;
+}
 
+void PmergeMe::printContainer(const std::vector<int>& v) const {
+    for (size_t i = 0; i < v.size(); ++i) {
+        std::cout << v[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
+void PmergeMe::printContainer(const std::deque<int>& d) const {
+    for (size_t i = 0; i < d.size(); ++i) {
+        std::cout << d[i] << " ";
+    }
+    std::cout << std::endl;
+}

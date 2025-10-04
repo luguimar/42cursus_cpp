@@ -13,7 +13,7 @@ class PmergeMe {
         PmergeMe& operator=(const PmergeMe& other);
         ~PmergeMe();
         void processInput(int argc, char** argv);
-    private:
+//    private:
         std::vector<int> vec;
         std::deque<int> deq;
         void mergeInsertSortVec(std::vector<int>& v);
@@ -21,7 +21,9 @@ class PmergeMe {
         void printContainer(const std::vector<int>& v) const;
         void printContainer(const std::deque<int>& d) const;
         int jacobsthal(int n) const;
-        int postJacobsthalIndex(int n, int size) const; 
+        int lastJacobsthal(int size) const;
+        int inVectorFindIndiceOf(const std::vector<int>& v, int value);
+        std::vector<int> jacobsthalOrder(int size);
 };
 
 #endif

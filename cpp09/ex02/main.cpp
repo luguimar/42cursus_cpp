@@ -5,7 +5,20 @@ int main(int argc, char** argv) {
     PmergeMe sorter;
     (void)argc; // evitar warning
     (void)argv; // evitar warning
-    for (int i = 1; i < 20; ++i) {
-        std::cout << sorter.jacobsthal(i) << std::endl;
+    
+    int i = 19;
+    std::vector<int> test;
+    test = sorter.jacobsthalOrder(i);
+    std::cout << "Jacobsthal order for " << i << " elements: ";
+    for (size_t j = 0; j < test.size(); ++j) {
+        std::cout << test[j] << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
+    i = 0;
+    while (i < 30) {
+        std::cout << "J(" << i << ") = " << sorter.jacobsthal(i) << std::endl;
+        std::cout << "Last J <= " << i << " is " << sorter.lastJacobsthal(i) << std::endl;
+        i++;
     }
 }
