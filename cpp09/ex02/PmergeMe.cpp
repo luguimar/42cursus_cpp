@@ -85,9 +85,7 @@ int PmergeMe::inVectorFindIndiceOf(const std::vector<int>& v, int value) {
 std::vector<int> PmergeMe::jacobsthalOrder(int size) {
     std::vector<int> order;
     int last = lastJacobsthal(size);
-//    int origLast = last;
-//    int prev = lastJacobsthal(last - 1);
-    order.push_back(last);  std::cout << "Last Jacobsthal <= " << size << " is " << last << std::endl;
+    order.push_back(last);
     while (last < size) {
         order.push_back(size--);
     }
@@ -95,18 +93,17 @@ std::vector<int> PmergeMe::jacobsthalOrder(int size) {
     if (last == 1) return order;
     last = lastJacobsthal(last - 1);
     order.insert(order.begin(), last);
-    int i = 0;
-    while (last < size) {
-        order.insert(order.begin() + PmergeMe::inVectorFindIndiceOf(order, prevLast), size--);
-        std::cout << "Inserting " << size + 1 << " before " << prevLast << " iteration: " << i << std::endl;
-        std::cout << "Current order: ";
-        PmergeMe::printContainer(order);
-        std::cout << std::endl;
+    int i = 1;
+    while (last < size && last != 0) {
+        if (i == 1) size--;
+        order.insert(order.begin() + PmergeMe::inVectorFindIndiceOf(order, prevLast) + i, size--);
         i++;
         if (last == size) {
             prevLast = last;
             last = lastJacobsthal(last - 1);
-            if (last == 1) break;
+            if (last != 0)
+                order.insert(order.begin(), last);
+            i = 1;
         }
     }
     return order;
